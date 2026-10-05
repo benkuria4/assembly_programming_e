@@ -22,17 +22,3 @@ After division, `AX = 166` and `DX = 200`. This satisfies `50000 = (300 × 166) 
 
 After `div bx`, **CF, OF, SF, ZF, AF, and PF are all undefined**. Division does not set or clear these flags to describe its quotient or remainder.
 
-## How to inspect the results and flags
-
-In GDB, break at `_start`, run, then single-step through the setup instructions and the `div` instruction. For `div1.asm`, use three `si` commands; for `div2.asm`, use five. At that point, inspect the result registers (`EAX` and `EDX`) and EFLAGS:
-
-```text
-break _start
-run
-si
-si
-si
-info registers eax edx eflags
-```
-
-For `div2.asm`, issue two additional `si` commands before inspecting. Record the quotient and remainder from the result registers. Do not claim that displayed arithmetic flag bits are set or cleared by `div`; their values are undefined by the instruction. Inspect before the exit sequence, whose `xor ebx, ebx` changes flags.
